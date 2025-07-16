@@ -2,15 +2,13 @@ const { Pool } = require('pg');
 require('dotenv').config();
 
 // Configuration avec SSL pour Render
+const connectionString = 'postgresql://dialogo_pg_user:FxBnii5ZxpeGDezwlxxsiLGe3MoSOJaf@dpg-d1rr6ap5pdvs73efl3hg-a.oregon-postgres.render.com/dialogo_pg';
+
 const pool = new Pool({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
-  port: process.env.DB_PORT || 5432,
-  ssl: process.env.NODE_ENV === 'production' ? { 
-    rejectUnauthorized: false // Nécessaire pour Render
-  } : false
+  connectionString,
+  ssl: {
+    rejectUnauthorized: false
+  }
 });
 
 // Test de connexion + création des tables si elles n'existent pas
